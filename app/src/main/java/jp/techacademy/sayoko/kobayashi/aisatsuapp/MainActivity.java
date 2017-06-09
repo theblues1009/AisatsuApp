@@ -6,25 +6,28 @@ import android.app.TimePickerDialog;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.util.Log;
 import android.view.View;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+
+    TextView mTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button button1 = (Button) findViewById(R.id.button1);
-        button1.setOnClickListener(this);
+        Button button = (Button) findViewById(R.id.button);
+        button.setOnClickListener(this);
+
+        mTextView = (TextView) findViewById(R.id.textView);
     }
 
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.button1){
+        if(v.getId() == R.id.button){
             showTimePickerDialog();
         }
     }
@@ -34,11 +37,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Log.d("UI-PARTS", String.valueOf(hourOfDay) + ":" + String.valueOf(minute));
+                        if(hourOfDay>=2 && hourOfDay<=9){
+                            mTextView.setText("おはよう");
+                        }else if(hourOfDay>=10 && hourOfDay<=17){
+                            mTextView.setText("こんにちは");
+                        }else {
+                            mTextView.setText("こんばんは");
+                        }
                     }
                 },
-                13, // 初期値（時間）
-                0,  // 初期値（分）
+                0,
+                0,
                 true);
         timePickerDialog.show();
                     }
